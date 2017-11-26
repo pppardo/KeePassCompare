@@ -17,8 +17,6 @@ namespace KeePassCompare {
         private ToolStripMenuItem m_tsmiMenuItem2 = null;
         private IPluginHost m_host = null;
 
-        public string UpdateUrl = "https://raw.githubusercontent.com/georgekosmidis/KeePassCompare/master/version.txt";
-
         public override bool Initialize( IPluginHost host ) {
             if ( host == null ) return false;
             m_host = host;
@@ -152,7 +150,8 @@ namespace KeePassCompare {
             // return prec.Compare( pe1, pe2 ) > 0;
             //return pe1.LastModificationTime == pe2.LastModificationTime;
             foreach ( var o in pe1.Strings ) {
-                if ( pe2.Strings.Get( o.Key ).ReadString() != o.Value.ReadString() )
+                //if ( pe2.Strings.Get( o.Key ).ReadString() != o.Value.ReadString() )
+                if (!pe2.Strings.Exists(o.Key) || pe2.Strings.Get(o.Key).ReadString() != o.Value.ReadString())
                     return false;
             }
             return true;
